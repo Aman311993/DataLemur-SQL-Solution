@@ -1,0 +1,7 @@
+Link : https://datalemur.com/questions/laptop-mobile-viewership?referralCode=UN79lJB7
+
+Solution : 
+SELECT
+sum(case when device_type='laptop' then 1 else 0 end) as laptop_views,
+SUM(case when device_type in ('tablet','phone') then 1 else 0 
+end ) as mobile_views from viewership;
