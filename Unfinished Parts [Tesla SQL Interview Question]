@@ -1,0 +1,4 @@
+Link :https://datalemur.com/questions/tesla-unfinished-parts?referralCode=UN79lJB7
+Solution : 
+SELECT part from parts_assembly where 
+finish_date is null group by part;
