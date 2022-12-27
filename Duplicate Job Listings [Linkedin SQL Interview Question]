@@ -1,0 +1,19 @@
+Link :https://datalemur.com/questions/duplicate-job-listings?referralCode=UN79lJB7
+Solution :
+----Using CTE----------
+with job_counts as (
+SELECT a.company_id,a.title,a.description,
+count(job_id) as no_of_jobs from job_listings a 
+group by  a.company_id,a.title,a.description)
+
+SELECT count(distinct company_id) as diuplicates_id from job_counts
+where no_of_jobs > 1;
+
+-----Using Subquery-----------------
+Solution : 
+SELECT COUNT(DISTINCT company_id) as no_of_duplicates_jobs
+from (
+SELECT a.company_id,a.title,a.description,
+COUNT(job_id) as count_of_job from job_listings a 
+group by  a.company_id,a.title,a.description ) as net_jobs
+where count_of_job >1;
