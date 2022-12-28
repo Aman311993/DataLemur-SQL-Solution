@@ -1,0 +1,26 @@
+Link :https://datalemur.com/questions/teams-power-users
+
+Solution 1:
+SELECT 
+  sender_id,
+  COUNT(message_id) AS count_messages
+FROM messages
+WHERE EXTRACT(MONTH FROM sent_date) = '8'
+  AND EXTRACT(YEAR FROM sent_date) = '2022'
+GROUP BY sender_id
+ORDER BY count_messages DESC
+LIMIT 2; 
+
+Solution 2:
+with cte_1 as (
+SELECT sender_id,
+count(sender_id) as message_count from messages
+where date_part('year',sent_date)=2022
+and date_part('month',sent_date)=8
+group by sender_id), cte_2 as (
+
+SELECT sender_id, message_count, dense_rank()
+over( order by message_count desc) as rnk from cte_1
+)
+SELECT sender_id, message_count from cte_2 where rnk <3; 
+
